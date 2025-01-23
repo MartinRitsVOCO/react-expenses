@@ -2,6 +2,7 @@ import './App.css'
 import './components/Expenses/Expenses.css'
 import ExpensesItem from './components/Expenses/ExpensesItem'
 import Card from './components/UI/Card'
+import NewExpense from './components/Expenses/NewExpense'
 
 function App() {
   const expenses = [
@@ -21,6 +22,7 @@ function App() {
   return (
     <>
       <Card className='expenses'>
+        <NewExpense />
         {expensesList}
       </Card>
     </>
