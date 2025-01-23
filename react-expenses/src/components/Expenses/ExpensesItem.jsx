@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import './ExpensesItem.css';
 import ExpensesDate from './ExpensesDate';
-import Card from './Card';
+import Card from '../UI/Card';
 
 const ExpensesItem = ({data}) => {
     const {date, title, price} = data;
