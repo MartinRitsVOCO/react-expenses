@@ -1,7 +1,6 @@
 import './App.css'
-import './components/Expenses/Expenses.css'
+import Expenses from './components/Expenses/Expenses'
 import ExpensesItem from './components/Expenses/ExpensesItem'
-import Card from './components/UI/Card'
 import NewExpense from './components/Expenses/NewExpense'
 
 function App() {
@@ -28,10 +27,10 @@ function App() {
 
   return (
     <>
-      <Card className='expenses'>
+      <Expenses>
         <NewExpense onAddExpense={addExpenseHandler} />
         {expensesList}
-      </Card>
+      </Expenses>
     </>
   )
 }
