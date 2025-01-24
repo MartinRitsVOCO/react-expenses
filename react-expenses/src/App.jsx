@@ -1,10 +1,10 @@
 import './App.css'
 import Expenses from './components/Expenses/Expenses'
-import ExpensesItem from './components/Expenses/ExpensesItem'
 import NewExpense from './components/Expenses/NewExpense'
+import { useState } from 'react';
 
-function App() {
-  const expenses = [
+const App = () => {
+  const expensesBase = [
     {
       id: crypto.randomUUID(),
       date: new Date(2024, 10, 12),
@@ -13,23 +13,30 @@ function App() {
     },
     {
       id: crypto.randomUUID(),
-      date: new Date(2024, 10, 16),
+      date: new Date(2024, 11, 16),
       title: 'New TV',
       price: 599.99
+    },
+    {
+      id: crypto.randomUUID(),
+      date: new Date(2025, 1, 8),
+      title: 'New Car',
+      price: 24999
     }
   ]
-  const expensesList = expenses.map(expense => <ExpensesItem data={expense} key={expense.id} />)
+
+  const [expenses, setExpenses] = useState(expensesBase);
 
   const addExpenseHandler = (expense) => {
-    expenses.push(expense);
-    console.log(expense);
+    setExpenses( (previousExpenses) => {
+      return [expense, ...previousExpenses]
+    })
   }
 
   return (
     <>
-      <Expenses>
-        <NewExpense onAddExpense={addExpenseHandler} />
-        {expensesList}
+      <NewExpense onAddExpense={addExpenseHandler} />
+      <Expenses expenses={expenses}>
       </Expenses>
     </>
   )
