@@ -5,25 +5,31 @@ import NewExpense from './components/Expenses/NewExpense'
 import { useState, useEffect } from 'react';
 
 const App = () => {
-  const expensesBase = localStorage.getItem('expenses') ? JSON.parse(localStorage.getItem('expenses')) : [];
-  
-  if (expensesBase.length !== 0) {
-    for (const expense of expensesBase) {
-      if (expense.date instanceof Date) {
-        continue;
-      }
-      expense.date = new Date(expense.date);
-      if (expense.date.toString() === 'Invalid Date') {
-        expense.date = new Date();
-      }
-    }
-  }
+  const [expenses, setExpenses] = useState([]);
 
-  const [expenses, setExpenses] = useState(expensesBase);
-  
   useEffect(() => {
-    localStorage.setItem('expenses', JSON.stringify(expenses))
-  }, [expenses])
+    fetch('http://localhost:3005/api/expenses')
+    .then(response => response.json())
+    .then(data => {
+      if (data.status !== 200) {
+        console.error("Error fetching expenses:", data.error);
+      } else {
+        for (const expense of data) {
+          if (expense.date instanceof Date) {
+            continue;
+          }
+          expense.date = new Date(expense.date);
+          if (expense.date.toString() === 'Invalid Date') {
+            expense.date = new Date();
+          }
+        }
+        setExpenses(data);
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }, []);
 
   const addExpenseHandler = (expense) => {
     setExpenses( (previousExpenses) => {
