@@ -1,31 +1,29 @@
+import { use } from 'react';
 import './App.css'
 import Expenses from './components/Expenses/Expenses'
 import NewExpense from './components/Expenses/NewExpense'
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const App = () => {
-  const expensesBase = [
-    {
-      id: crypto.randomUUID(),
-      date: new Date(2024, 10, 12),
-      title: 'New Book',
-      price: 29.99
-    },
-    {
-      id: crypto.randomUUID(),
-      date: new Date(2024, 11, 16),
-      title: 'New TV',
-      price: 599.99
-    },
-    {
-      id: crypto.randomUUID(),
-      date: new Date(2025, 1, 8),
-      title: 'New Car',
-      price: 24999
+  const expensesBase = localStorage.getItem('expenses') ? JSON.parse(localStorage.getItem('expenses')) : [];
+  
+  if (expensesBase.length !== 0) {
+    for (const expense of expensesBase) {
+      if (expense.date instanceof Date) {
+        continue;
+      }
+      expense.date = new Date(expense.date);
+      if (expense.date.toString() === 'Invalid Date') {
+        expense.date = new Date();
+      }
     }
-  ]
+  }
 
   const [expenses, setExpenses] = useState(expensesBase);
+  
+  useEffect(() => {
+    localStorage.setItem('expenses', JSON.stringify(expenses))
+  }, [expenses])
 
   const addExpenseHandler = (expense) => {
     setExpenses( (previousExpenses) => {
