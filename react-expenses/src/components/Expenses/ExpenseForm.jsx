@@ -4,7 +4,6 @@ import './ExpenseForm.css';
 
 const ExpensesForm = ({ onSaveExpenseData, onStateChange }) => {
     const [error, setError] = useState(null);
-    console.log(error);
 
     //ma ei viitsi neid refe pidevalt kirjutada
     const refs = useRef({});

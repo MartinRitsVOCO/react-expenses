@@ -5,7 +5,7 @@ import ExpensesFilter from './ExpensesFilter'
 import ExpensesItem from './ExpensesItem'
 import ExpensesList from './ExpensesList'
 
-const Expenses = ({expenses}) => {
+const Expenses = ({isLoading, expenses}) => {
   const [filteredYear, setFilteredYear] = useState('All');
 
   const filterChangeHandler = (selectedYear) => {
@@ -25,7 +25,7 @@ const Expenses = ({expenses}) => {
   return (
     <Card className='expenses'>
         <ExpensesFilter onYearChange={filterChangeHandler} />
-        <ExpensesList expenses={expensesList} />
+        <ExpensesList isLoading={isLoading} expenses={expensesList} />
     </Card>
   )
 }

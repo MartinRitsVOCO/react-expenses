@@ -12,8 +12,9 @@ app.use((req, res, next) => {
 
 app.get('/api/expenses', async (req, res) => {
     import('./data/expenses.json', { with: { type: 'json' } })
-    .then(data => {
-        res.status(200).json(data);
+    .then(module => {
+        const expenses = module.default;
+        res.status(200).json(expenses);
     })
     .catch(err => {
         console.error(err);
