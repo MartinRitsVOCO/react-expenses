@@ -34,6 +34,7 @@ const App = () => {
       }
       setIsFetching(false);
       setExpenses(newExpenses);
+      console.log(newExpenses);
     })
     .catch(error => {
       setIsFetching(false);
@@ -46,8 +47,24 @@ const App = () => {
   }, []);
 
   const addExpenseHandler = (expense) => {
-    setExpenses( (previousExpenses) => {
-      return [expense, ...previousExpenses]
+    fetch('http://localhost:3005/api/add-expense', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(expense)
+    })
+    .then(response => {
+      if (response.status !== 201) {
+        throw new Error(response)
+      } else {
+        setExpenses( (previousExpenses) => {
+          return [expense, ...previousExpenses]
+        })
+      }
+    })
+    .catch(error => {
+      console.error(error);
     })
   }
 
